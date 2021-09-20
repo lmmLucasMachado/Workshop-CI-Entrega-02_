@@ -1,0 +1,16 @@
+image: docker:latest
+
+stages:          
+  - build
+  - test
+
+build-backend:
+  stage: build
+  script:
+    - docker build -f backend/Dockerfile backend
+    
+build-frontend:
+  stage: build
+  script:
+    - docker build -f frontend/Dockerfile frontend
+
