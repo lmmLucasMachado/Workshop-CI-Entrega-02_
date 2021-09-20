@@ -3,14 +3,23 @@ image: docker:latest
 stages:          
   - build
   - test
-
+  
 build-backend:
   stage: build
+  before_script:
+    - echo "Build backend"
   script:
-    - docker build -f backend/Dockerfile backend
-    
+    - cd backend
+    - docker build -t backend .
+  after_script:
+    - echo "Build okay"
+
 build-frontend:
   stage: build
+  before_script:
+    - echo "Build frontend"
   script:
     - docker build -f frontend/Dockerfile frontend
+  after_script:
+    - echo "Build okay"
 
