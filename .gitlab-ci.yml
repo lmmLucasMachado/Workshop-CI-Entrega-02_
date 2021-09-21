@@ -1,7 +1,7 @@
 services:
   - docker:dind
 
-stages:
+stages:     
   - build
   - test
 
@@ -46,3 +46,5 @@ test-frontend:
     - docker-compose run --entrypoint "npm run coverage" frontend
   after_script:
     - echo "Test frontend okay"
+
+
