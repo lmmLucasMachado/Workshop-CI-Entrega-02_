@@ -4,6 +4,7 @@ services:
 stages:     
   - build
   - test
+  - deploy
 
 build-backend:
   image: docker:latest
@@ -41,10 +42,34 @@ test-frontend:
   image: docker/compose:latest
   stage: test
   before_script:
-    - echo ""
+    - echo "Test frontend"
   script:
     - docker-compose run --entrypoint "npm run coverage" frontend
   after_script:
     - echo "Test frontend okay"
+
+deploy-frontend:
+  image: docker:latest
+  stage: deploy
+  before_script:
+    - echo "Deploy front"
+    - docker login -u $USER -p $PASSWORD
+  script:
+    - docker build -t $USER/trab-02-gces -f frontend/Dockerfile frontend
+    - docker push $USER/trab-02-gces
+  after_script:
+    - echo "Deploy front okay"
+
+deploy-backend:  
+  image: docker:latest
+  stage: deploy
+  before_script:
+    - echo "Deploy back"
+    - docker login -u $USER -p $PASSWORD
+  script:
+    - docker build -t $USER/trab-02-gces-backend -f backend/Dockerfile backend
+    - docker push  $USER/trab-02-gces-backend
+  after_script:
+    - echo "Deploy back okay"
 
 
