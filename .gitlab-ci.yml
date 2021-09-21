@@ -1,4 +1,7 @@
-stages:          
+services:
+  - docker:dind
+
+stages:
   - build
   - test
 
@@ -23,7 +26,7 @@ build-frontend:
     - docker build -t frontend .
   after_script:
     - echo "Build okay"
-1
+
 test-backend:
   image: docker/compose:latest
   stage: test
